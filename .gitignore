@@ -1,0 +1,10 @@
+# Compiled class file
+*.class
+# Binaries
+/bin
+/dist
+
+# Eclipse
+/.classpath
+/.project
+/.settings

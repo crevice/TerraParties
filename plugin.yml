@@ -1,0 +1,12 @@
+main: com.gmail.xtendspb.plugins.parties.Parties
+name: TerraParties
+version: 1.0
+author: xtend
+description: "Allow players to make parties!"
+commands:
+  pc:
+    description: "Toggles Party Chat."
+    usage: /pc
+  party:
+    description: "Parties command."
+    usage: /party
