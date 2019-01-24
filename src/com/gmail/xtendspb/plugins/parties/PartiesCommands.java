@@ -15,69 +15,69 @@ public class PartiesCommands {
 	 */
 	public String createParty(String playerName, String partyName){
 		if(Parties.pm.getPlayerParty(playerName).isValid()){
-			return "&c> Вы уже состоите в группе.";
+			return "&c> Р’С‹ СѓР¶Рµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(partyName.length() > 8 || partyName.length() < 3){
-			return "&c> Название должно содержать от 3 до 8 символов.";
+			return "&c> РќР°Р·РІР°РЅРёРµ РґРѕР»Р¶РЅРѕ СЃРѕРґРµСЂР¶Р°С‚СЊ РѕС‚ 3 РґРѕ 8 СЃРёРјРІРѕР»РѕРІ.";
 		}
 		if(!partyName.matches("^[a-zA-Z0-9]*$")){
-			return "&c> Название может содержать только цифры и буквы английского алфавита.";
+			return "&c> РќР°Р·РІР°РЅРёРµ РјРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ С‚РѕР»СЊРєРѕ С†РёС„СЂС‹ Рё Р±СѓРєРІС‹ Р°РЅРіР»РёР№СЃРєРѕРіРѕ Р°Р»С„Р°РІРёС‚Р°.";
 		}
 		if(Parties.pm.getParty(partyName).isValid()){
-			return "&c> Группа с таким названием уже существует.";
+			return "&c> Р“СЂСѓРїРїР° СЃ С‚Р°РєРёРј РЅР°Р·РІР°РЅРёРµРј СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.";
 		}
 		Parties.pm.addParty(partyName, playerName);
 		Parties.doLog(playerName + " created party " + partyName);
-		return "&a> Вы создали группу: " + partyName + "\n&e> Неактивные группы будут удалены через 14 дней.";
+		return "&a> Р’С‹ СЃРѕР·РґР°Р»Рё РіСЂСѓРїРїСѓ: " + partyName + "\n&e> РќРµР°РєС‚РёРІРЅС‹Рµ РіСЂСѓРїРїС‹ Р±СѓРґСѓС‚ СѓРґР°Р»РµРЅС‹ С‡РµСЂРµР· 14 РґРЅРµР№.";
 	}
 	
 	public String leaveParty(String playerName){
 		Party playerParty = Parties.pm.getPlayerParty(playerName);
 		if(!playerParty.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(playerParty.getPartyOwner().equalsIgnoreCase(playerName)){
 			if(playerParty.getPlayersNum() > 1){
-				return "&c> Лидер не может покинуть группу, пока в ней есть игроки.";
+				return "&c> Р›РёРґРµСЂ РЅРµ РјРѕР¶РµС‚ РїРѕРєРёРЅСѓС‚СЊ РіСЂСѓРїРїСѓ, РїРѕРєР° РІ РЅРµР№ РµСЃС‚СЊ РёРіСЂРѕРєРё.";
 			}else{
 				Parties.pm.removeParty(playerParty.getPartyName());
-				return "&e> Пустая группа " + playerParty.getPartyName() +" была расформирована.";
+				return "&e> РџСѓСЃС‚Р°СЏ РіСЂСѓРїРїР° " + playerParty.getPartyName() +" Р±С‹Р»Р° СЂР°СЃС„РѕСЂРјРёСЂРѕРІР°РЅР°.";
 			}
 		}
-		playerParty.sendMessageToAll("&e> *"+ playerName +" покидает группу.");
+		playerParty.sendMessageToAll("&e> *"+ playerName +" РїРѕРєРёРґР°РµС‚ РіСЂСѓРїРїСѓ.");
 		Parties.doLog(playerName + " leaved party " + playerParty.getPartyName());
 		playerParty.delPlayer(playerName);
-		return "&a> Вы покинули группу: " + playerParty.getPartyName();
+		return "&a> Р’С‹ РїРѕРєРёРЅСѓР»Рё РіСЂСѓРїРїСѓ: " + playerParty.getPartyName();
 	}
 	
 	public String joinParty(String playerName, String partyName, String partyPass){
 		if(Parties.pm.getPlayerParty(playerName).isValid()){
-			return "&c> Вы уже состоите в группе.";
+			return "&c> Р’С‹ СѓР¶Рµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(partyName.length() <= 0){
-			return "&c> Вы не указали название группы.";
+			return "&c> Р’С‹ РЅРµ СѓРєР°Р·Р°Р»Рё РЅР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹.";
 		}
 		Party joinParty = Parties.pm.getParty(partyName);
 		if(!joinParty.isValid()){
-			return "&c> Указанной группы не существует.";
+			return "&c> РЈРєР°Р·Р°РЅРЅРѕР№ РіСЂСѓРїРїС‹ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.";
 		}
 		if(partyPass.length() > 0){
 			if(partyPass.equals(joinParty.getPartyPassword())){
-				joinParty.sendMessageToAll("&e> *"+ playerName +" присоединяется к группе по паролю.");
+				joinParty.sendMessageToAll("&e> *"+ playerName +" РїСЂРёСЃРѕРµРґРёРЅСЏРµС‚СЃСЏ Рє РіСЂСѓРїРїРµ РїРѕ РїР°СЂРѕР»СЋ.");
 				joinParty.addPlayer(playerName);
 				Parties.doLog(playerName + " joined party " + partyName + " by password.");
-				return "&a> Вы присоединяетесь к группе: " + partyName;
+				return "&a> Р’С‹ РїСЂРёСЃРѕРµРґРёРЅСЏРµС‚РµСЃСЊ Рє РіСЂСѓРїРїРµ: " + partyName;
 			}else{
-				return "&c> Пароль указан неверно, либо не задан.";
+				return "&c> РџР°СЂРѕР»СЊ СѓРєР°Р·Р°РЅ РЅРµРІРµСЂРЅРѕ, Р»РёР±Рѕ РЅРµ Р·Р°РґР°РЅ.";
 			}
 		}
 		if(joinParty.isClosed()){
-			return "&c> Это закрытая группа. Вам нужно приглашение.";
+			return "&c> Р­С‚Рѕ Р·Р°РєСЂС‹С‚Р°СЏ РіСЂСѓРїРїР°. Р’Р°Рј РЅСѓР¶РЅРѕ РїСЂРёРіР»Р°С€РµРЅРёРµ.";
 		}
-		joinParty.sendMessageToAll("&e> *"+ playerName +" присоединяется к группе.");
+		joinParty.sendMessageToAll("&e> *"+ playerName +" РїСЂРёСЃРѕРµРґРёРЅСЏРµС‚СЃСЏ Рє РіСЂСѓРїРїРµ.");
 		joinParty.addPlayer(playerName);
 		Parties.doLog(playerName + " joined party " + partyName);
-		return "&a> Вы присоединяетесь к группе: " + partyName;
+		return "&a> Р’С‹ РїСЂРёСЃРѕРµРґРёРЅСЏРµС‚РµСЃСЊ Рє РіСЂСѓРїРїРµ: " + partyName;
 	}
 	
 	public String listParty(String playerName){
@@ -91,7 +91,7 @@ public class PartiesCommands {
 					list +="&a"+v+"&f, ";
 				}
 			}
-			return "&a> Игроки в группе " + playerParty.getPartyName() + ": &f"+list;
+			return "&a> РРіСЂРѕРєРё РІ РіСЂСѓРїРїРµ " + playerParty.getPartyName() + ": &f"+list;
 		}else{
 			String list = "";
 			for(Party p : Parties.pm.getParties()){
@@ -101,7 +101,7 @@ public class PartiesCommands {
 					list +="&a"+p.getPartyName()+"&f, ";
 				}
 			}
-			return "&a> Группы: &f" + list;
+			return "&a> Р“СЂСѓРїРїС‹: &f" + list;
 		}
 	}
 	
@@ -111,55 +111,55 @@ public class PartiesCommands {
 	public String inviteParty(String playerName, String targetName){
 		Party playerParty = Parties.pm.getPlayerParty(playerName);
 		if(!playerParty.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(playerName.equalsIgnoreCase(targetName)){
-			return "&c> Вы не можете пригласить в группу самого себя.";
+			return "&c> Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ РїСЂРёРіР»Р°СЃРёС‚СЊ РІ РіСЂСѓРїРїСѓ СЃР°РјРѕРіРѕ СЃРµР±СЏ.";
 		}
 		if(!playerParty.isInvite() && !playerName.equalsIgnoreCase(playerParty.getPartyOwner())){
-			return "&c> В данной группе приглашать может только владелец.";
+			return "&c> Р’ РґР°РЅРЅРѕР№ РіСЂСѓРїРїРµ РїСЂРёРіР»Р°С€Р°С‚СЊ РјРѕР¶РµС‚ С‚РѕР»СЊРєРѕ РІР»Р°РґРµР»РµС†.";
 		}
 		Player target = Bukkit.getPlayerExact(targetName);
 		if(target == null){
-			return "&c> Указанный игрок не в игре.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє РЅРµ РІ РёРіСЂРµ.";
 		}
 		Party targetParty = Parties.pm.getPlayerParty(targetName);
 		if(targetParty.isValid()){
-			return "&c> Указанный игрок уже состоит в группе.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє СѓР¶Рµ СЃРѕСЃС‚РѕРёС‚ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(Parties.pm.isInvited(targetName)){
-			return "&c> Указанный игрок уже приглашён в группу.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє СѓР¶Рµ РїСЂРёРіР»Р°С€С‘РЅ РІ РіСЂСѓРїРїСѓ.";
 		}
-		playerParty.sendMessageToAll("&e> *"+ playerName +" пригласил " + targetName + " в группу.");
+		playerParty.sendMessageToAll("&e> *"+ playerName +" РїСЂРёРіР»Р°СЃРёР» " + targetName + " РІ РіСЂСѓРїРїСѓ.");
 		Parties.pm.addInvite(targetName, playerName, playerParty.getPartyName());
 		Parties.sendMessage(target, 
-						"&a> Приглашение в группу от " +playerName + "\n" +
-						"&e> Используйте &a/party accept&e, чтобы принять \n" + 
-						"&e> или &c/party decline&e чтобы отклонить его."
+						"&a> РџСЂРёРіР»Р°С€РµРЅРёРµ РІ РіСЂСѓРїРїСѓ РѕС‚ " +playerName + "\n" +
+						"&e> РСЃРїРѕР»СЊР·СѓР№С‚Рµ &a/party accept&e, С‡С‚РѕР±С‹ РїСЂРёРЅСЏС‚СЊ \n" + 
+						"&e> РёР»Рё &c/party decline&e С‡С‚РѕР±С‹ РѕС‚РєР»РѕРЅРёС‚СЊ РµРіРѕ."
 						);
-		return "&a> Приглашение игроку " + targetName + " отправлено.";
+		return "&a> РџСЂРёРіР»Р°С€РµРЅРёРµ РёРіСЂРѕРєСѓ " + targetName + " РѕС‚РїСЂР°РІР»РµРЅРѕ.";
 	}
 	
 	public String acceptParty(String playerName){
 		if(Parties.pm.getPlayerParty(playerName).isValid()){
-			return "&c> Вы уже состоите в группе.";
+			return "&c> Р’С‹ СѓР¶Рµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!Parties.pm.isInvited(playerName)){
-			return "&c> Вы не были приглашены в группу.";
+			return "&c> Р’С‹ РЅРµ Р±С‹Р»Рё РїСЂРёРіР»Р°С€РµРЅС‹ РІ РіСЂСѓРїРїСѓ.";
 		}
 		Party p = Parties.pm.getParty(Parties.pm.getInvite(playerName).getPartyName());
 		Parties.pm.removeInvite(playerName);
 		p.addPlayer(playerName);
-		p.sendMessageToAll("&e> *"+ playerName +" принял приглашение в группу.");
-		return "&a> Вы приняли приглашение в группу " + p.getPartyName() + ".";
+		p.sendMessageToAll("&e> *"+ playerName +" РїСЂРёРЅСЏР» РїСЂРёРіР»Р°С€РµРЅРёРµ РІ РіСЂСѓРїРїСѓ.");
+		return "&a> Р’С‹ РїСЂРёРЅСЏР»Рё РїСЂРёРіР»Р°С€РµРЅРёРµ РІ РіСЂСѓРїРїСѓ " + p.getPartyName() + ".";
 	}
 	
 	public String declineParty(String playerName){
 		if(!Parties.pm.isInvited(playerName)){
-			return "&c> Вы не были приглашены в группу.";
+			return "&c> Р’С‹ РЅРµ Р±С‹Р»Рё РїСЂРёРіР»Р°С€РµРЅС‹ РІ РіСЂСѓРїРїСѓ.";
 		}
 		Parties.pm.removeInvite(playerName);		
-		return "&c> Вы отказались от приглашения в группу.";
+		return "&c> Р’С‹ РѕС‚РєР°Р·Р°Р»РёСЃСЊ РѕС‚ РїСЂРёРіР»Р°С€РµРЅРёСЏ РІ РіСЂСѓРїРїСѓ.";
 	}
 	
 	/*
@@ -168,79 +168,79 @@ public class PartiesCommands {
 	public String disbandParty(String playerName){
 		Party playerParty = Parties.pm.getPlayerParty(playerName);
 		if(!playerParty.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!playerParty.getPartyOwner().equalsIgnoreCase(playerName)){
-			return "&c> Вы не лидер группы.";
+			return "&c> Р’С‹ РЅРµ Р»РёРґРµСЂ РіСЂСѓРїРїС‹.";
 		}
-		playerParty.sendMessageToAll("&c> *"+ playerName +" расформировал группу.");
+		playerParty.sendMessageToAll("&c> *"+ playerName +" СЂР°СЃС„РѕСЂРјРёСЂРѕРІР°Р» РіСЂСѓРїРїСѓ.");
 		Parties.pm.removeParty(playerParty.getPartyName()); 
 		Parties.doLog(playerName + " disbanded party " + playerParty.getPartyName());
-		return "&a> Группа расформирована.";
+		return "&a> Р“СЂСѓРїРїР° СЂР°СЃС„РѕСЂРјРёСЂРѕРІР°РЅР°.";
 	}
 	
 	public String kickPlayerFromParty(String playerName, String target){
 		Party playerParty = Parties.pm.getPlayerParty(playerName);
 		if(!playerParty.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!playerParty.getPartyOwner().equalsIgnoreCase(playerName)){
-			return "&c> Вы не лидер группы.";
+			return "&c> Р’С‹ РЅРµ Р»РёРґРµСЂ РіСЂСѓРїРїС‹.";
 		}
 		if(playerName.equalsIgnoreCase(target)){
-			return "&c> Вы не можете исключить самого себя.";
+			return "&c> Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ РёСЃРєР»СЋС‡РёС‚СЊ СЃР°РјРѕРіРѕ СЃРµР±СЏ.";
 		}
 		if(!playerParty.isPlayerInParty(target)){
-			return "&c> Указанный игрок находится не в вашей группе.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє РЅР°С…РѕРґРёС‚СЃСЏ РЅРµ РІ РІР°С€РµР№ РіСЂСѓРїРїРµ.";
 		}
-		playerParty.sendMessageToAll("&c> *" + target + " был исключен из группы.");
+		playerParty.sendMessageToAll("&c> *" + target + " Р±С‹Р» РёСЃРєР»СЋС‡РµРЅ РёР· РіСЂСѓРїРїС‹.");
 		playerParty.delPlayer(target);
-		return "&a> Вы исключили " + target + " из группы.";
+		return "&a> Р’С‹ РёСЃРєР»СЋС‡РёР»Рё " + target + " РёР· РіСЂСѓРїРїС‹.";
 	}
 	
 	public String setPassword(String playerName, String password){
 		Party playerParty = Parties.pm.getPlayerParty(playerName);
 		if(!playerParty.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!playerParty.getPartyOwner().equalsIgnoreCase(playerName)){
-			return "&c> Вы не лидер группы.";
+			return "&c> Р’С‹ РЅРµ Р»РёРґРµСЂ РіСЂСѓРїРїС‹.";
 		}
 		if(password.length() > 16 && password.length() < 4){
-			return "&c> Пароль должен содержать от 4 до 16 символов.";
+			return "&c> РџР°СЂРѕР»СЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РѕС‚ 4 РґРѕ 16 СЃРёРјРІРѕР»РѕРІ.";
 		}
 		playerParty.setPartyPassword(password);
 		if(password.length() == 0){
-			return "&a> Пароль для входа в группу удалён.";
+			return "&a> РџР°СЂРѕР»СЊ РґР»СЏ РІС…РѕРґР° РІ РіСЂСѓРїРїСѓ СѓРґР°Р»С‘РЅ.";
 		}else{
-			return "&a> Пароль для входа в группу установлен.";
+			return "&a> РџР°СЂРѕР»СЊ РґР»СЏ РІС…РѕРґР° РІ РіСЂСѓРїРїСѓ СѓСЃС‚Р°РЅРѕРІР»РµРЅ.";
 		}
 	}
 	
 	public String setInvite(String playerName){
 		Party playerParty = Parties.pm.getPlayerParty(playerName);
 		if(!playerParty.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!playerParty.getPartyOwner().equalsIgnoreCase(playerName)){
-			return "&c> Вы не лидер группы.";
+			return "&c> Р’С‹ РЅРµ Р»РёРґРµСЂ РіСЂСѓРїРїС‹.";
 		}
 		if(playerParty.isInvite()){
 			playerParty.setInvite(false);
-			return "&e> Приглашения в группу: &cотключены";
+			return "&e> РџСЂРёРіР»Р°С€РµРЅРёСЏ РІ РіСЂСѓРїРїСѓ: &cРѕС‚РєР»СЋС‡РµРЅС‹";
 		}else{
 			playerParty.setInvite(true);
-			return "&e> Приглашения в группу: &aвключены";
+			return "&e> РџСЂРёРіР»Р°С€РµРЅРёСЏ РІ РіСЂСѓРїРїСѓ: &aРІРєР»СЋС‡РµРЅС‹";
 		}
 	}
 	
 	public String setTopic(String playerName, String[] arr){
 		Party p = Parties.pm.getPlayerParty(playerName);
 		if(!p.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!p.getPartyOwner().equalsIgnoreCase(playerName)){
-			return "&c> Вы не лидер группы.";
+			return "&c> Р’С‹ РЅРµ Р»РёРґРµСЂ РіСЂСѓРїРїС‹.";
 		}
 		String motd = "";
 		for(int i = 1; i < arr.length; i++){
@@ -248,179 +248,179 @@ public class PartiesCommands {
 		}
 		
 		if(motd.length() >= 99){
-			return "&c> Длина сообщения превышает 99 символов.";
+			return "&c> Р”Р»РёРЅР° СЃРѕРѕР±С‰РµРЅРёСЏ РїСЂРµРІС‹С€Р°РµС‚ 99 СЃРёРјРІРѕР»РѕРІ.";
 		}
 		p.setPartyTopic(motd);
-		return "&a> Сообщение группы изменено.";
+		return "&a> РЎРѕРѕР±С‰РµРЅРёРµ РіСЂСѓРїРїС‹ РёР·РјРµРЅРµРЅРѕ.";
 	}
 	
 	public String setType(String playerName){
 		Party p = Parties.pm.getPlayerParty(playerName);
 		if(!p.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!p.getPartyOwner().equalsIgnoreCase(playerName)){
-			return "&c> Вы не лидер группы.";
+			return "&c> Р’С‹ РЅРµ Р»РёРґРµСЂ РіСЂСѓРїРїС‹.";
 		}
 		if(p.isClosed()){
 			p.setClosed(false);
-			return "&e> Тип группы изменен на: &aоткрытая";
+			return "&e> РўРёРї РіСЂСѓРїРїС‹ РёР·РјРµРЅРµРЅ РЅР°: &aРѕС‚РєСЂС‹С‚Р°СЏ";
 		}else{
 			p.setClosed(true);
-			return "&e> Тип группы изменен на: &cзакрытая";
+			return "&e> РўРёРї РіСЂСѓРїРїС‹ РёР·РјРµРЅРµРЅ РЅР°: &cР·Р°РєСЂС‹С‚Р°СЏ";
 		}
 	}
 	
 	public String setPvp(String playerName){
 		Party p = Parties.pm.getPlayerParty(playerName);
 		if(!p.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!p.getPartyOwner().equalsIgnoreCase(playerName)){
-			return "&c> Вы не лидер группы.";
+			return "&c> Р’С‹ РЅРµ Р»РёРґРµСЂ РіСЂСѓРїРїС‹.";
 		}
 		if(p.isPvp()){
 			p.setPvp(false);
-			return "&e> Режим PVP в группе: &cотключен";
+			return "&e> Р РµР¶РёРј PVP РІ РіСЂСѓРїРїРµ: &cРѕС‚РєР»СЋС‡РµРЅ";
 		}else{
 			p.setPvp(true);
-			return "&e> Режим PVP в группе: &aвключен";
+			return "&e> Р РµР¶РёРј PVP РІ РіСЂСѓРїРїРµ: &aРІРєР»СЋС‡РµРЅ";
 		}
 	}
 	
 	public String setLeader(String playerName, String targetName){
 		Party p = Parties.pm.getPlayerParty(playerName);
 		if(!p.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(!p.getPartyOwner().equalsIgnoreCase(playerName)){
-			return "&c> Вы не лидер группы.";
+			return "&c> Р’С‹ РЅРµ Р»РёРґРµСЂ РіСЂСѓРїРїС‹.";
 		}
 		Player target = Bukkit.getPlayerExact(targetName);
 		if(target == null){
-			return "&c> Указанный игрок не в игре.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє РЅРµ РІ РёРіСЂРµ.";
 		}
 		Party targetParty = Parties.pm.getPlayerParty(targetName);
 		if(!p.getPartyName().equalsIgnoreCase(targetParty.getPartyName())){
-			return "&c> Указанный игрок состоит в другой группе.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє СЃРѕСЃС‚РѕРёС‚ РІ РґСЂСѓРіРѕР№ РіСЂСѓРїРїРµ.";
 		}
-		p.sendMessageToAll("&e> " + playerName + " назначил " + target.getName() + " лидером группы.");
+		p.sendMessageToAll("&e> " + playerName + " РЅР°Р·РЅР°С‡РёР» " + target.getName() + " Р»РёРґРµСЂРѕРј РіСЂСѓРїРїС‹.");
 		p.setPartyOwner(targetName);
 		
 		Parties.doLog(playerName + " changed leader of party " + p.getPartyName() + " to " + targetName);
-		return "&a> Лидер группы изменен.";
+		return "&a> Р›РёРґРµСЂ РіСЂСѓРїРїС‹ РёР·РјРµРЅРµРЅ.";
 	}
 	//party tp command
 	public String teleportRequest(String playerName, String targetName){
 		Party playerParty = Parties.pm.getPlayerParty(playerName);
 		if(!playerParty.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		if(playerName.equalsIgnoreCase(targetName)){
-			return "&c> Вы не можете телепортироваться к себе самому.";
+			return "&c> Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ С‚РµР»РµРїРѕСЂС‚РёСЂРѕРІР°С‚СЊСЃСЏ Рє СЃРµР±Рµ СЃР°РјРѕРјСѓ.";
 		}
 		Player target = Bukkit.getPlayerExact(targetName);
 		if(target == null){
-			return "&c> Указанный игрок не в игре.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє РЅРµ РІ РёРіСЂРµ.";
 		}
 		Party targetParty = Parties.pm.getPlayerParty(targetName);
 		if(!playerParty.getPartyName().equalsIgnoreCase(targetParty.getPartyName())){
-			return "&c> Указанный игрок состоит в другой группе.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє СЃРѕСЃС‚РѕРёС‚ РІ РґСЂСѓРіРѕР№ РіСЂСѓРїРїРµ.";
 		}
 		Parties.pm.addTeleport(targetName, playerName, playerParty.getPartyName());
 		Parties.sendMessage(target, 
-						"&a> Запрос на телепорт от " +playerName + "\n" +
-						"&e> Используйте &a/party tpaccept&e, чтобы принять \n" + 
-						"&e> или &c/party tpdecline&e чтобы отклонить его."
+						"&a> Р—Р°РїСЂРѕСЃ РЅР° С‚РµР»РµРїРѕСЂС‚ РѕС‚ " +playerName + "\n" +
+						"&e> РСЃРїРѕР»СЊР·СѓР№С‚Рµ &a/party tpaccept&e, С‡С‚РѕР±С‹ РїСЂРёРЅСЏС‚СЊ \n" + 
+						"&e> РёР»Рё &c/party tpdecline&e С‡С‚РѕР±С‹ РѕС‚РєР»РѕРЅРёС‚СЊ РµРіРѕ."
 						);
-		return "&a> Запрос на телепорт к игроку " + targetName + " отправлен.";
+		return "&a> Р—Р°РїСЂРѕСЃ РЅР° С‚РµР»РµРїРѕСЂС‚ Рє РёРіСЂРѕРєСѓ " + targetName + " РѕС‚РїСЂР°РІР»РµРЅ.";
 	}
 	
 	public String teleportAccept(String playerName){
 		PartyTeleport pt = Parties.pm.getTeleport(playerName);
 		if(pt == null){
-			return "&c> К вам никто не телепортируется.";
+			return "&c> Рљ РІР°Рј РЅРёРєС‚Рѕ РЅРµ С‚РµР»РµРїРѕСЂС‚РёСЂСѓРµС‚СЃСЏ.";
 		}
 		
 		if(pt.isTimedOut()){
 			Parties.pm.removeTeleport(playerName);
-			return "&c> Время ожидания телепортации истекло. Попробуйте ещё раз.";
+			return "&c> Р’СЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ С‚РµР»РµРїРѕСЂС‚Р°С†РёРё РёСЃС‚РµРєР»Рѕ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·.";
 		}
 		
 		Player teleFrom = Bukkit.getPlayerExact(pt.getFrom());
 		if(teleFrom == null){
 			Parties.pm.removeTeleport(playerName);		
-			return "&c> Указанный игрок вышел из игры.";
+			return "&c> РЈРєР°Р·Р°РЅРЅС‹Р№ РёРіСЂРѕРє РІС‹С€РµР» РёР· РёРіСЂС‹.";
 		}
 		Party playerParty = Parties.pm.getPlayerParty(playerName);
 		Party targetParty = Parties.pm.getPlayerParty(pt.getFrom());
 		if(!playerParty.getPartyName().equalsIgnoreCase(targetParty.getPartyName())){
-			return "&c> Телепортируемый игрок состоит в другой группе.";
+			return "&c> РўРµР»РµРїРѕСЂС‚РёСЂСѓРµРјС‹Р№ РёРіСЂРѕРє СЃРѕСЃС‚РѕРёС‚ РІ РґСЂСѓРіРѕР№ РіСЂСѓРїРїРµ.";
 		}
 		
 		Player teleTarget = Bukkit.getPlayerExact(pt.getTo());
 		teleFrom.teleport(teleTarget);
 		Parties.pm.removeTeleport(playerName);		
-		return "&a> Вы приняли запрос на телепортацию от " + pt.getFrom() + ".";
+		return "&a> Р’С‹ РїСЂРёРЅСЏР»Рё Р·Р°РїСЂРѕСЃ РЅР° С‚РµР»РµРїРѕСЂС‚Р°С†РёСЋ РѕС‚ " + pt.getFrom() + ".";
 	}
 	
 	public String teleportDecline(String playerName){
 		if(!Parties.pm.isTeleporting(playerName)){
-			return "&c> К вам никто не телепортируется.";
+			return "&c> Рљ РІР°Рј РЅРёРєС‚Рѕ РЅРµ С‚РµР»РµРїРѕСЂС‚РёСЂСѓРµС‚СЃСЏ.";
 		}
 		Parties.pm.removeTeleport(playerName);		
-		return "&c> Вы отказались от запроса на телепортацию.";
+		return "&c> Р’С‹ РѕС‚РєР°Р·Р°Р»РёСЃСЊ РѕС‚ Р·Р°РїСЂРѕСЃР° РЅР° С‚РµР»РµРїРѕСЂС‚Р°С†РёСЋ.";
 	}
 	
 	public String toggleChat(String playerName){
 		if(Parties.pm.isPartyChatToggled(playerName)){
 			Parties.pm.disablePartyChat(playerName);
-			return "&a> Теперь вы общаетесь в общем чате.";
+			return "&a> РўРµРїРµСЂСЊ РІС‹ РѕР±С‰Р°РµС‚РµСЃСЊ РІ РѕР±С‰РµРј С‡Р°С‚Рµ.";
 		}
 		Parties.pm.enablePartyChat(playerName);
-		return "&b> Теперь вы общаетесь в групповом чате.";
+		return "&b> РўРµРїРµСЂСЊ РІС‹ РѕР±С‰Р°РµС‚РµСЃСЊ РІ РіСЂСѓРїРїРѕРІРѕРј С‡Р°С‚Рµ.";
 	}
 	
 	public String status(String playerName){
 		Party p = Parties.pm.getPlayerParty(playerName);
 		if(!p.isValid()){
-			return "&c> Вы не состоите в группе.";
+			return "&c> Р’С‹ РЅРµ СЃРѕСЃС‚РѕРёС‚Рµ РІ РіСЂСѓРїРїРµ.";
 		}
 		String status = 
-				"&a--- &eИнформация о группе &a-------------------------\n"
-				+"\n&aНазвание: &f"+ p.getPartyName()
-				+"\n&aЛидер: &f"+ p.getPartyOwner()
-				+"\n&aСоздана: &f"+ new SimpleDateFormat("dd.MM.yy HH:mm").format(new Date(p.getTimeCreated()*1000))
-				+"\n&aИгроков: &f"+p.getPlayersNum()
-				+"\n&aЗакрытая: &f"+ (p.isClosed() ? "&aДа" : "&cНет")
-				+"\n&aПароль: &f"+ (p.getPartyPassword().equals("") ? "&cНет" : "&aДа")
-				+"\n&aПриглашения: &f"+ (p.isInvite() ? "&aДа" : "&cНет")
-				+"\n&aPvP разрешен: &f"+ (p.isPvp() ? "&aДа" : "&cНет")
-				+"\n&aСообщение группы: &f\n"
+				"&a--- &eРРЅС„РѕСЂРјР°С†РёСЏ Рѕ РіСЂСѓРїРїРµ &a-------------------------\n"
+				+"\n&aРќР°Р·РІР°РЅРёРµ: &f"+ p.getPartyName()
+				+"\n&aР›РёРґРµСЂ: &f"+ p.getPartyOwner()
+				+"\n&aРЎРѕР·РґР°РЅР°: &f"+ new SimpleDateFormat("dd.MM.yy HH:mm").format(new Date(p.getTimeCreated()*1000))
+				+"\n&aРРіСЂРѕРєРѕРІ: &f"+p.getPlayersNum()
+				+"\n&aР—Р°РєСЂС‹С‚Р°СЏ: &f"+ (p.isClosed() ? "&aР”Р°" : "&cРќРµС‚")
+				+"\n&aРџР°СЂРѕР»СЊ: &f"+ (p.getPartyPassword().equals("") ? "&cРќРµС‚" : "&aР”Р°")
+				+"\n&aРџСЂРёРіР»Р°С€РµРЅРёСЏ: &f"+ (p.isInvite() ? "&aР”Р°" : "&cРќРµС‚")
+				+"\n&aPvP СЂР°Р·СЂРµС€РµРЅ: &f"+ (p.isPvp() ? "&aР”Р°" : "&cРќРµС‚")
+				+"\n&aРЎРѕРѕР±С‰РµРЅРёРµ РіСЂСѓРїРїС‹: &f\n"
 				+p.getPartyTopic();
 		return status;
 	}
 	
 	public String help(){
 		String help = 
-				 "&a--- &eОбщие команды группы &a-----------------------\n"
-				+"&a/party create &eназвание&f - создать группу.\n"
-				+"&a/party join &eназвание пароль&f - присоединится к группе.\n"
-				+"&a/party leave&f - покинуть группу.\n"
-				+"&a/party list&f - список групп/игроков в группе.\n"
-				+"&a/party invite&f - пригласить игрока в группу.\n"
-				+"&a/party tp &eник&f - телепортироваться к игроку.\n"
-				+"&a/pc&f - групповой чат.\n"
-				+"&a--- &eКоманды лидера группы &a----------------------\n"
-				+"&a/party disband&f - расформировать группу.\n"
-				+"&a/party kick &eник&f - кикнуть игрока из группы.\n"
-				+"&a/party status - информация о группе.\n"
-				+"&a/party setpassword &eпароль&f - установить пароль.\n"
-				+"&a/party setinvite&f - разрешить приглашения.\n"
-				+"&a/party setmotd &eтекст&f - установить motd группы.\n"
-				+"&a/party settype&f - закрыть/открыть группу.\n"
-				+"&a/party setpvp&f - разрешить PvP в группе.\n"
-				+"&a/party setleader &eник&f - назначить нового лидера.";
+				 "&a--- &eРћР±С‰РёРµ РєРѕРјР°РЅРґС‹ РіСЂСѓРїРїС‹ &a-----------------------\n"
+				+"&a/party create &eРЅР°Р·РІР°РЅРёРµ&f - СЃРѕР·РґР°С‚СЊ РіСЂСѓРїРїСѓ.\n"
+				+"&a/party join &eРЅР°Р·РІР°РЅРёРµ РїР°СЂРѕР»СЊ&f - РїСЂРёСЃРѕРµРґРёРЅРёС‚СЃСЏ Рє РіСЂСѓРїРїРµ.\n"
+				+"&a/party leave&f - РїРѕРєРёРЅСѓС‚СЊ РіСЂСѓРїРїСѓ.\n"
+				+"&a/party list&f - СЃРїРёСЃРѕРє РіСЂСѓРїРї/РёРіСЂРѕРєРѕРІ РІ РіСЂСѓРїРїРµ.\n"
+				+"&a/party invite&f - РїСЂРёРіР»Р°СЃРёС‚СЊ РёРіСЂРѕРєР° РІ РіСЂСѓРїРїСѓ.\n"
+				+"&a/party tp &eРЅРёРє&f - С‚РµР»РµРїРѕСЂС‚РёСЂРѕРІР°С‚СЊСЃСЏ Рє РёРіСЂРѕРєСѓ.\n"
+				+"&a/pc&f - РіСЂСѓРїРїРѕРІРѕР№ С‡Р°С‚.\n"
+				+"&a--- &eРљРѕРјР°РЅРґС‹ Р»РёРґРµСЂР° РіСЂСѓРїРїС‹ &a----------------------\n"
+				+"&a/party disband&f - СЂР°СЃС„РѕСЂРјРёСЂРѕРІР°С‚СЊ РіСЂСѓРїРїСѓ.\n"
+				+"&a/party kick &eРЅРёРє&f - РєРёРєРЅСѓС‚СЊ РёРіСЂРѕРєР° РёР· РіСЂСѓРїРїС‹.\n"
+				+"&a/party status - РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ РіСЂСѓРїРїРµ.\n"
+				+"&a/party setpassword &eРїР°СЂРѕР»СЊ&f - СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РїР°СЂРѕР»СЊ.\n"
+				+"&a/party setinvite&f - СЂР°Р·СЂРµС€РёС‚СЊ РїСЂРёРіР»Р°С€РµРЅРёСЏ.\n"
+				+"&a/party setmotd &eС‚РµРєСЃС‚&f - СѓСЃС‚Р°РЅРѕРІРёС‚СЊ motd РіСЂСѓРїРїС‹.\n"
+				+"&a/party settype&f - Р·Р°РєСЂС‹С‚СЊ/РѕС‚РєСЂС‹С‚СЊ РіСЂСѓРїРїСѓ.\n"
+				+"&a/party setpvp&f - СЂР°Р·СЂРµС€РёС‚СЊ PvP РІ РіСЂСѓРїРїРµ.\n"
+				+"&a/party setleader &eРЅРёРє&f - РЅР°Р·РЅР°С‡РёС‚СЊ РЅРѕРІРѕРіРѕ Р»РёРґРµСЂР°.";
 		return help;
 	}
 }

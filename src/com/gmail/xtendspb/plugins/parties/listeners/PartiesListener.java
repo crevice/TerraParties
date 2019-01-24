@@ -37,7 +37,7 @@ public class PartiesListener implements Listener{
 		if(!victimParty.equals("") && !damagerParty.equals("") && victimParty.equalsIgnoreCase(damagerParty)){
 			if(!Parties.pm.getPlayerParty(e.getEntity().getName()).isPvp()){
 				e.setCancelled(true);
-				Parties.sendMessage((Player)e.getDamager(),"&c> PvP в группе отключен.");
+				Parties.sendMessage((Player)e.getDamager(),"&c> PvP РІ РіСЂСѓРїРїРµ РѕС‚РєР»СЋС‡РµРЅ.");
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public class PartiesListener implements Listener{
 	public void onJoin(PlayerJoinEvent e){
 		Party p = Parties.pm.getPlayerParty(e.getPlayer().getName());
 		if(p.isValid() && !p.getPartyTopic().equalsIgnoreCase("")){
-			Parties.sendMessage(e.getPlayer(), "&e> Сообщение группы: " + p.getPartyTopic());
+			Parties.sendMessage(e.getPlayer(), "&e> РЎРѕРѕР±С‰РµРЅРёРµ РіСЂСѓРїРїС‹: " + p.getPartyTopic());
 		}
 	}
 	
