@@ -15,8 +15,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 
-import ru.tehkode.permissions.bukkit.PermissionsEx;
-
 import com.gmail.xtendspb.plugins.parties.Parties;
 import com.gmail.xtendspb.plugins.parties.utils.Party;
 
@@ -48,7 +46,7 @@ public class PartiesListener implements Listener{
 		String sender = e.getPlayer().getName();
 		Party senderParty = Parties.pm.getPlayerParty(sender);
 		if(senderParty.isValid() && Parties.pm.isPartyChatToggled(sender)){
-			senderParty.sendMessageToAll("[&7" + dateFormat.format(new Date()) + "&f][&3" + senderParty.getPartyName() + "&f]<" + PermissionsEx.getUser(sender).getPrefix() + sender + PermissionsEx.getUser(sender).getSuffix() + "&f> " +e.getMessage());
+			senderParty.sendMessageToAll("[&7" + dateFormat.format(new Date()) + "&f][&3" + senderParty.getPartyName() + "&f]<" + sender +  "&f> " +e.getMessage());
 			Parties.doLog("["+ senderParty.getPartyName() +"] "+sender+": "+e.getMessage());
 			e.setCancelled(true);
 		}
